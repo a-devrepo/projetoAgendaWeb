@@ -13,11 +13,17 @@ Projeto de estudos desenvolvido com **Angular 19** que tem como objetivo gerenci
 
 ## Funcionalidades
 
-- ✅ Listar tarefas por categoria
-- ➕ Cadastrar novas tarefas
-- 📝 Editar tarefas existentes
-- 🔄 Atualizar status ou dados de uma tarefa
-- ❌ Excluir tarefas
-- 📡 Integração com backend via HTTP (API REST)
+- Listar tarefas por categoria
+- Cadastrar novas tarefas
+- Editar tarefas existentes
+- Atualizar status ou dados de uma tarefa
+- Excluir tarefas
+- Integração com backend via HTTP (API REST)
 
 ---
+
+## API Backend
+
+Este projeto consome a API RESTful desenvolvida com Spring Boot, disponível neste repositório:
+
+[projetoAgendaApi (GitHub)](https://github.com/a-devrepo/projetoAgendaApi)
