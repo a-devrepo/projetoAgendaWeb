@@ -1,12 +1,14 @@
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
-import { FormBuilder, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-cadastro-tarefas',
   imports: [
-    CommonModule
+    CommonModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   templateUrl: './cadastro-tarefas.component.html',
   styleUrl: './cadastro-tarefas.component.css'
@@ -19,10 +21,10 @@ export class CadastroTarefasComponent {
   formBuilder = inject(FormBuilder);
   
   form = this.formBuilder.group({
-    titulo: new FormControl('',[Validators.required]),
+    titulo: new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(100)]),
     data: new FormControl('',[Validators.required]),
     hora: new FormControl('',[Validators.required]),
-    fnalizado: new FormControl('',[Validators.required]),
+    finalizado: new FormControl(null,[Validators.required]),
     categoriaId: new FormControl('',[Validators.required])
   });
 
@@ -31,5 +33,9 @@ export class CadastroTarefasComponent {
     .subscribe((response) =>{
       this.categorias = response as any[];
     });
+  }
+
+  onSubmit(){
+    console.log(this.form.value);
   }
 }

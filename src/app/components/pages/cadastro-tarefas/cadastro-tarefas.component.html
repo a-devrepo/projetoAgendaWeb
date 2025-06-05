@@ -5,27 +5,61 @@
         <p class="card-text">Preencha os campos para incluir uma tarefa em sua agenda.</p>
         <hr />
   
-        <form>
+        <form [formGroup]="form">
           <div class="mb-3">
-            <label for="titulo" class="form-label">Título da tarefa:</label>
-            <input type="text" id="titulo" class="form-control" placeholder="Digite o título da tarefa aqui" />
+            <label class="form-label">Título da tarefa:</label>
+            <input type="text" formControlName="titulo" class="form-control" placeholder="Digite o título da tarefa aqui" />
+
+            <div class="text-danger" *ngIf="form.get('titulo')?.touched">
+              <span *ngIf="form.get('titulo')?.hasError('required')">
+                Por favor, preencha o título da tarefa.
+              </span>
+              <span *ngIf="form.get('titulo')?.hasError('minlength')">
+                Por favor, informe o título da tarefa com pelo menos 8 caracteres.
+              </span>
+              <span *ngIf="form.get('titulo')?.hasError('maxlength')">
+                Por favor, informe o título da tarefa com no máximo 100 caracteres.
+              </span>
+            </div>
           </div>
   
           <div class="mb-3">
-            <label for="dataHora" class="form-label">Data e hora da tarefa:</label>
-            <input type="datetime-local" id="dataHora" class="form-control" />
+            <label class="form-label">Data da tarefa:</label>
+            <input type="date" formControlName="data" class="form-control" />
+            <div class="text-danger" *ngIf="form.get('data')?.touched">
+              <span *ngIf="form.get('data')?.hasError('required')">
+                Por favor, preencha a data da tarefa.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hora da tarefa:</label>
+            <input type="time" formControlName="hora" class="form-control" />
+            <div class="text-danger" *ngIf="form.get('hora')?.touched">
+              <span *ngIf="form.get('hora')?.hasError('required')">
+                Por favor, preencha a hora da tarefa.
+              </span>
+            </div>
           </div>
   
-          <div class="form-check mb-3">
-            <input class="form-check-input" type="checkbox" id="finalizado" />
-            <label class="form-check-label" for="finalizado">
-              Finalizado?
-            </label>
+          <div class="mb-3">
+            <label class="form-label">Tarefa finalizada?</label>
+            <div>
+              <input type="radio" formControlName="finalizado" [value]="true"/>Sim
+              &nbsp;
+              <input type="radio" formControlName="finalizado" [value]="false"/>Não
+            </div>
+            <div class="text-danger" *ngIf="form.get('finalizado')?.touched">
+              <span *ngIf="form.get('finalizado')?.hasError('required')">
+                Por favor, informe o status da tarefa.
+              </span>
+            </div>
           </div>
   
           <div class="mb-4">
             <label for="categoria" class="form-label">Selecione a categoria:</label>
-            <select id="categoria" class="form-select">
+            <select formControlName="categoriaId" class="form-select">
               <option value="">Escolha uma opção</option>
               <option *ngFor="let categoria of categorias" [value]="categoria.id">
                 {{categoria.nome}}
@@ -33,7 +67,7 @@
             </select>
           </div>
   
-          <button type="submit" class="btn btn-primary">
+          <button type="submit" [disabled]="form.invalid" class="btn btn-primary">
             Realizar Cadastro
           </button>
         </form>
