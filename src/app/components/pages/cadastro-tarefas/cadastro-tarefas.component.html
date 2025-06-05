@@ -4,8 +4,11 @@
         <h2 class="card-title mb-3">Cadastro de Tarefas</h2>
         <p class="card-text">Preencha os campos para incluir uma tarefa em sua agenda.</p>
         <hr />
+        <div *ngIf="mensagem" class="alert alert-success">
+          <strong>{{mensagem}}</strong>
+        </div>
   
-        <form [formGroup]="form">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
           <div class="mb-3">
             <label class="form-label">Título da tarefa:</label>
             <input type="text" formControlName="titulo" class="form-control" placeholder="Digite o título da tarefa aqui" />
@@ -59,12 +62,17 @@
   
           <div class="mb-4">
             <label for="categoria" class="form-label">Selecione a categoria:</label>
-            <select formControlName="categoriaId" class="form-select">
+            <select formControlName="categoriaID" class="form-select">
               <option value="">Escolha uma opção</option>
               <option *ngFor="let categoria of categorias" [value]="categoria.id">
                 {{categoria.nome}}
               </option>
             </select>
+            <div class="text-danger" *ngIf="form.get('categoriaID')?.touched">
+              <span *ngIf="form.get('categoriaID')?.hasError('required')">
+                Por favor, informe a categoria da tarefa.
+              </span>
+            </div>
           </div>
   
           <button type="submit" [disabled]="form.invalid" class="btn btn-primary">

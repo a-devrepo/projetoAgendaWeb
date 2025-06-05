@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-cadastro-tarefas',
@@ -16,6 +17,7 @@ import { FormBuilder, FormControl, FormsModule, ReactiveFormsModule, Validators 
 export class CadastroTarefasComponent {
   
   categorias: any[] = [];
+  mensagem: string = '';
 
   http = inject(HttpClient);
   formBuilder = inject(FormBuilder);
@@ -24,18 +26,22 @@ export class CadastroTarefasComponent {
     titulo: new FormControl('',[Validators.required,Validators.minLength(8),Validators.maxLength(100)]),
     data: new FormControl('',[Validators.required]),
     hora: new FormControl('',[Validators.required]),
-    finalizado: new FormControl(null,[Validators.required]),
-    categoriaId: new FormControl('',[Validators.required])
+    finalizado: new FormControl('',[Validators.required]),
+    categoriaID: new FormControl('',[Validators.required])
   });
 
   ngOnInit(): void {
-    this.http.get('http://localhost:8081/api/v1/categorias')
+    this.http.get(environment.apiTarefas + '/categorias')
     .subscribe((response) =>{
       this.categorias = response as any[];
     });
   }
 
   onSubmit(){
-    console.log(this.form.value);
+    this.http.post(environment.apiTarefas + '/tarefas',this.form.value)
+    .subscribe((response) =>{
+      this.mensagem = this.form.get('titulo')?.value + ' cadastrada com sucesso!';
+      this.form.reset()
+    });
   }
 }
