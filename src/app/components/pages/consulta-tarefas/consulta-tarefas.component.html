@@ -4,6 +4,42 @@
         <h2 class="card-title mb-3">Consulta de Tarefas</h2>
         <p class="card-text">Listagem de tarefas cadastradas na agenda.</p>
         <hr />
+        <table class="table table-sm table-responsive">
+          <thead>
+            <tr>
+              <th>Título</th>
+              <th>Data</th>
+              <th>Hora</th>
+              <th>Finalizado</th>
+              <th>Categoria</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let tarefa of tarefas">
+              <td>{{tarefa.titulo | uppercase}}</td>
+              <td>{{tarefa.data | date:'dd/MM/yyyy'}}</td>
+              <td>{{tarefa.hora}}</td>
+              <td>{{tarefa.finalizado ? 'Sim' : 'Não'}}</td>
+              <td>{{tarefa.categoria.nome | uppercase}}</td>
+              <td>
+                <button class="btn btn-sm btn-primary me-2">
+                  Editar
+                </button>
+                <button class="btn btn-sm btn-danger me-2">
+                  Excluir
+                </button>
+              </td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td colspan="6">
+                Quantidade de tarefas: {{tarefas.length}}
+              </td>
+            </tr>
+          </tfoot>
+        </table>
       </div>
     </div>
   </div>
