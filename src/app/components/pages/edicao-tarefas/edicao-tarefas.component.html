@@ -1,1 +1,84 @@
-<p>edicao-tarefas works!</p>
+<div class="container mt-5">
+    <div class="card shadow">
+      <div class="card-body">
+        <h2 class="card-title mb-3">Edição de Tarefa</h2>
+        <p class="card-text">Preencha os campos para atualizar uma tarefa em sua agenda.</p>
+        <hr />
+        <div *ngIf="mensagem" class="alert alert-success">
+          <strong>{{mensagem}}</strong>
+        </div>
+  
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <div class="mb-3">
+            <label class="form-label">Título da tarefa:</label>
+            <input type="text" formControlName="titulo" class="form-control" placeholder="Digite o título da tarefa aqui" />
+
+            <div class="text-danger" *ngIf="form.get('titulo')?.touched">
+              <span *ngIf="form.get('titulo')?.hasError('required')">
+                Por favor, preencha o título da tarefa.
+              </span>
+              <span *ngIf="form.get('titulo')?.hasError('minlength')">
+                Por favor, informe o título da tarefa com pelo menos 8 caracteres.
+              </span>
+              <span *ngIf="form.get('titulo')?.hasError('maxlength')">
+                Por favor, informe o título da tarefa com no máximo 100 caracteres.
+              </span>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <label class="form-label">Data da tarefa:</label>
+            <input type="date" formControlName="data" class="form-control" />
+            <div class="text-danger" *ngIf="form.get('data')?.touched">
+              <span *ngIf="form.get('data')?.hasError('required')">
+                Por favor, preencha a data da tarefa.
+              </span>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label">Hora da tarefa:</label>
+            <input type="time" formControlName="hora" class="form-control" />
+            <div class="text-danger" *ngIf="form.get('hora')?.touched">
+              <span *ngIf="form.get('hora')?.hasError('required')">
+                Por favor, preencha a hora da tarefa.
+              </span>
+            </div>
+          </div>
+  
+          <div class="mb-3">
+            <label class="form-label">Tarefa finalizada?</label>
+            <div>
+              <input type="radio" formControlName="finalizado" [value]="true"/>Sim
+              &nbsp;
+              <input type="radio" formControlName="finalizado" [value]="false"/>Não
+            </div>
+            <div class="text-danger" *ngIf="form.get('finalizado')?.touched">
+              <span *ngIf="form.get('finalizado')?.hasError('required')">
+                Por favor, informe o status da tarefa.
+              </span>
+            </div>
+          </div>
+  
+          <div class="mb-4">
+            <label for="categoria" class="form-label">Selecione a categoria:</label>
+            <select formControlName="categoriaID" class="form-select">
+              <option value="">Escolha uma opção</option>
+              <option *ngFor="let categoria of categorias" [value]="categoria.id">
+                {{categoria.nome}}
+              </option>
+            </select>
+            <div class="text-danger" *ngIf="form.get('categoriaID')?.touched">
+              <span *ngIf="form.get('categoriaID')?.hasError('required')">
+                Por favor, informe a categoria da tarefa.
+              </span>
+            </div>
+          </div>
+  
+          <button type="submit" [disabled]="form.invalid" class="btn btn-primary">
+            Salvar Alterações
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>

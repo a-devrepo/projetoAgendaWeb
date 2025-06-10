@@ -23,7 +23,7 @@
               <td>{{tarefa.finalizado ? 'Sim' : 'Não'}}</td>
               <td>{{tarefa.categoria.nome | uppercase}}</td>
               <td>
-                <button class="btn btn-sm btn-primary me-2">
+                <button class="btn btn-sm btn-primary me-2" [routerLink]="['/pages/edicao-tarefas',tarefa.id]">
                   Editar
                 </button>
                 <button class="btn btn-sm btn-danger me-2" (click)="onDelete(tarefa)">

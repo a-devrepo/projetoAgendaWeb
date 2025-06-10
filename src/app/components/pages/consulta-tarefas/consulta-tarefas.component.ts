@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Component, inject } from '@angular/core';
 import { environment } from '../../../../environments/environment.development';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-consulta-tarefas',
-  imports: [CommonModule],
+  imports: [CommonModule,RouterLink],
   templateUrl: './consulta-tarefas.component.html',
   styleUrl: './consulta-tarefas.component.css'
 })
