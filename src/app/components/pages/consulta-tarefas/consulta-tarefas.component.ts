@@ -21,4 +21,15 @@ export class ConsultaTarefasComponent {
       this.tarefas = response as any[];
     });
   }
+
+  onDelete(tarefa:any){
+    
+    if(confirm(`Deseja realmente excluir a tarefa: ${tarefa.titulo}?`)){
+      this.http.delete(`${environment.apiTarefas}/tarefas/${tarefa.id}`)
+      .subscribe((response:any) => {
+        alert(`Tarefa ${tarefa.titulo} excluída com sucesso!`);
+        this.ngOnInit();
+      });
+    }
+  }
 }
